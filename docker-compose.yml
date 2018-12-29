@@ -9,10 +9,10 @@ services:
     image: registry.gitlab.com/vgalaktionov/curatify
     build:
       context: .
-    ports:
-      - 80:3000
     depends_on:
       - db
+    ports:
+      - 3000:3000
     env_file:
       - .env
     command: sh -c "java -jar /curatify/app.jar migrate && java -jar /curatify/app.jar"
@@ -23,3 +23,16 @@ services:
       - db-data:/var/lib/postgresql/db-data
     env_file:
       - .env
+
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - web
+    restart: always
+    environment:
+      DOMAINS: 'curatify.xyz -> http://web:3000'
+      STAGE: 'production'
+      FORCE_RENEW: 'true'

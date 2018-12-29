@@ -137,8 +137,8 @@
 (defn configure-spotify []
   (set! (.-onSpotifyWebPlaybackSDKReady js/window)
         (fn []
-          (let [token (get-in @session [:user :token :access_token])
-                player (js/Spotify.Player. (js-obj "name" "Curatify Player" "getOAuthToken" (fn [cb] (cb token))))]
+          (let [player (js/Spotify.Player. (js-obj "name" "Curatify Player" "getOAuthToken" (fn [cb] (cb (get-in @session [:user :token :access_token])))))]
+            (set! (.-player js/window) player)
             (.addListener player "initialization_error" (fn [obj] (.error js/console (extract obj "message"))))
             (.addListener player "authentication_error" (fn [obj] (.error js/console (extract obj "message"))))
             (.addListener player "account_error" (fn [obj] (.error js/console (extract obj "message"))))
@@ -163,6 +163,6 @@
   (.setInterval js/window api/fetch-user! (* 1000 60))
   (api/fetch-inbox!)
   (api/fetch-playlists!)
-  (configure-spotify)
   (hook-browser-navigation!)
-  (mount-components))
+  (mount-components)
+  (configure-spotify))
