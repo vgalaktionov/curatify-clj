@@ -1,4 +1,4 @@
-(defproject curatify "0.2.1-SNAPSHOT"
+(defproject curatify "0.2.2-SNAPSHOT"
 
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
@@ -34,7 +34,7 @@
                  [org.postgresql/postgresql "42.2.5"]
                  [org.webjars.npm/bulma "0.7.2"]
                  [org.webjars.npm/bulmaswatch "0.6.1"]
-                 [org.webjars/material-design-icons "3.0.1"]
+                 [org.webjars.npm/mdi__font "3.2.89"]
                  [org.webjars/webjars-locator "0.34"]
                  [reagent "0.8.1"]
                  [ring-webjars "0.2.0"]

@@ -34,3 +34,4 @@ services:
       DOMAINS: 'curatify.xyz -> http://web:3000'
       STAGE: 'production'
       FORCE_RENEW: 'true'
+      GZIP: 'on'
