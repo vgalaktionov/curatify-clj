@@ -25,8 +25,8 @@
       (assoc :session nil)))
 
 
-(defn me [{{user :identity} :session}]
-  (let [user (update-user-token user)]
+(defn me [{session :session}]
+  (let [user (update-user-token (:identity session))]
     (-> {:body user}
         (response/ok)
         (assoc :session (assoc session :identity user)))))
