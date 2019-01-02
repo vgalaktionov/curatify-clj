@@ -91,7 +91,7 @@
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
 
-   :project/dev  {:jvm-opts ["-Dconf=dev-config.edn"]
+   :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" "-Xverify:none"]
                   :dependencies [[binaryage/devtools "0.9.10"]
                                  [cider/piggieback "0.3.10"]
                                  [doo "0.1.11"]
@@ -126,7 +126,7 @@
                   :repl-options {:init-ns user :nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
-   :project/test {:jvm-opts ["-Dconf=test-config.edn"]
+   :project/test {:jvm-opts ["-Dconf=test-config.edn" "-Xverify:none"]
                   :resource-paths ["env/test/resources"]
                   :cljsbuild
                   {:builds
