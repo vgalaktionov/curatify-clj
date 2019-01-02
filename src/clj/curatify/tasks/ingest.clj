@@ -7,7 +7,7 @@
 
 (defn expiring? [token]
   (> (quot (System/currentTimeMillis) 1000)
-     (- 60 (:expires-at token))))
+     (- (:expires-at token) 60)))
 
 
 (defn update-user-token [{token :token :as user}]

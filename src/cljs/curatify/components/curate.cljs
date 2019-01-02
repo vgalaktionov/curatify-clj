@@ -112,7 +112,7 @@
         track-id (get track-info "id")
         track-playing (not (nil? track-info))
         inbox-track (lookup-track-id-in-inbox track-id)
-        matching-playlist (if track-playing (->> (:playlist_affinities inbox-track)
+        matching-playlist (if track-playing (->> (or (:playlist_affinities inbox-track) {})
                                                  (apply max-key val)
                                                  (first)
                                                  (name)

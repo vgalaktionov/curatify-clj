@@ -1,9 +1,10 @@
-(defproject curatify "0.2.2-SNAPSHOT"
+(defproject curatify "0.2.3-SNAPSHOT"
 
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Web app to make music discovery through spotify more enjoyable."
+  :url "https://curatify.xyz"
 
-  :dependencies [[buddy "2.0.0"]
+  :dependencies [[bk/ring-gzip "0.3.0"]
+                 [buddy "2.0.0"]
                  [cheshire "5.8.1"]
                  [clj-commons/secretary "1.2.4"]
                  [clj-http "3.9.1"]

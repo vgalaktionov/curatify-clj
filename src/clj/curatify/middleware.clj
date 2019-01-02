@@ -12,6 +12,7 @@
             [ring.middleware.flash :refer [wrap-flash]]
             [immutant.web.middleware :refer [wrap-session]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
+            [ring.middleware.gzip :refer [wrap-gzip]]
             [ring.middleware.session.cookie :refer [cookie-store]]
             [buddy.auth.middleware :refer [wrap-authentication]]
             [buddy.auth.backends.session :refer [session-backend]]
@@ -69,3 +70,4 @@
             (assoc-in [:session :store] (cookie-store {:key (:secret-key env)}))
             (assoc-in [:session :cookie-name] "curatify-session")))
       wrap-internal-error))
+      ;wrap-gzip))

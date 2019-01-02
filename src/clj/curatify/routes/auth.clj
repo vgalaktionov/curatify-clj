@@ -26,10 +26,12 @@
 
 
 (defn me [{session :session}]
-  (let [user (update-user-token (:identity session))]
-    (-> {:body user}
-        (response/ok)
-        (assoc :session (assoc session :identity user)))))
+  (let [user (:identity session)]
+    (if (not (nil? user))
+      (-> {:body (update-user-token user)}
+          (response/ok)
+          (assoc :session (assoc session :identity user)))
+      (response/no-content))))
 
 
 (defroutes auth-routes
