@@ -142,7 +142,8 @@ on conflict (user_id, track_id) do nothing;
 select t.id, t.name, i.genres, i.artists, i.playlist_affinities from inbox i
 inner join tracks t on t.id = i.track_id
 where i.user_id = :id
-and i.status = 'unheard';
+and i.status = 'unheard'
+order by random();
 
 
 -- :name enrich-inbox! :! :n
