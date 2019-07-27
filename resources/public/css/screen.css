@@ -1,8 +1,9 @@
 html,
 body {
-	/*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
     height: 100%;
 }
+
 nav {
     /*margin-bottom: 20px;*/
     height: 90px;
@@ -15,7 +16,8 @@ nav {
 .navbar-item.is-logo {
     position: absolute;
     left: 50%;
-    margin-left: -64px; /* 50% */
+    margin-left: -64px;
+    /* 50% */
     height: 100%;
     display: flex;
     align-items: center;

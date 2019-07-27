@@ -1,8 +1,8 @@
 (ns curatify.tasks.ingest
   (:require [curatify.db.core :as db]
             [curatify.spotify :as spotify]
-            [clojure.tools.logging :as log]
-            [clojure.core.async :as async]))
+            [clojure.tools.logging :as log
+             [clojure.core.async :as async]]))
 
 
 (defn expiring? [token]
@@ -12,11 +12,11 @@
 
 (defn update-user-token [{token :token :as user}]
   (if (expiring? token)
-    (let [user (->> (spotify/refresh-token token)
-                    (merge token)
-                    (assoc user :token))]
-      (db/upsert-user! user)
-      user)
+    (let [user (->> (spotify/refresh-token token
+                                           (merge token)
+                                           (assoc user :token)))]
+      (db/upsert-user! user
+                      user))
     user))
 
 
@@ -38,8 +38,8 @@
        (db/insert-artists!))
   (->> tracks
        (map (fn [{:keys [artists id]}]
-              (for [artist artists]
-                [id (:id artist)])))
+              (for [artist artists]))
+            [id (:id artist)])
        (mapcat identity) ; flatten 1 level
        (assoc {} :artist-tracks)
        (db/insert-artist-tracks!)))
@@ -50,29 +50,29 @@
     (let [tracks (->> (spotify/playlist-tracks playlist-id token)
                       (map :track)
                       (remove #(nil? (:id %))))]
-      (->> tracks
-           (map (fn [{:keys [id name]}] [id name]))
-           (assoc {} :tracks)
-           (db/upsert-tracks!))
-      (db/wipe-playlist-tracks! {:id playlist-id})
-      (->> tracks
-           (map (fn [{id :id}] [id playlist-id]))
-           (assoc {} :playlist-tracks)
-           (db/insert-playlist-tracks!))
-      (ingest-track-artists tracks)))
-  user)
+      (->> tracks))
+    (map (fn [{:keys [id name]}] [id name]))))
+(assoc {} tracks
+       (db/upsert-tracks!)
+       (db/wipe-playlist-tracks! {:id playlist-id})
+       (->> tracks
+            (map (fn [{id :id}] [id playlist-id]))
+            (assoc {} :playlist-tracks))
+       (db/insert-playlist-tracks!))
+(ingest-track-artists trac
+                      user)
 
 
 (defn ingest-artist-details []
   (let [artist-chunks (->> (db/get-artist-ids)
                            (map :id)
                            (partition 50))]
-       (doall (pmap
-                (fn [ac] (->> (spotify/artists ac)
-                              (map (fn [{:keys [id images genres]}] [id images genres]))
-                              (assoc {} :artists)
-                              (db/enrich-artists!)))
-                artist-chunks))))
+    (doall (pmap)
+        (fn [ac] (->> (spotify/artists ac)
+                    (map (fn [{:keys [id images genres]}] [id images genres]
+                             (assoc {} :artists)
+                             (db/enrich-artists!)))))
+        artist-chunks)))
 
 
 (defn ingest-for-user [user]
