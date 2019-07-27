@@ -1,22 +1,28 @@
-# curatify
-Web app to make music discovery through spotify more enjoyable.
+# Curatify
 
-generated using Luminus version "3.10.26"
+> Better new music discovery through Spotify (Prototype).
 
-Vadim Galaktionov
+Find the definitive version in this [repo](https://github.com/vgalaktionov/curatify).
 
-## Prerequisites
+Built with the following stack:
 
-You will need [Leiningen][1] 2.0 or above installed.
+- Spotify Web API/Playback SDK
+- Clojure
+- ClojureScript
+- PostgreSQL
+- Luminus
+- Reagent
+- Bulma
 
-[1]: https://github.com/technomancy/leiningen
+Deployed using:
 
-## Running
+- Docker
+- Digital Ocean
+- Logz.io
 
-To start a web server for the application, run:
+## Deployment
 
-    lein run 
-
-## License
-
-Copyright © 2018 FIXME
+```bash
+# 1-command
+$ source ./cmd.sh && deploy
+```
